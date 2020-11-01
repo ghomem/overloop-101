@@ -9,6 +9,14 @@ from techtest.connector import BaseModel
 class Region(BaseModel):
     __tablename__ = 'author'
 
+    id = Column(
+        Integer,
+        name='id',
+        nullable=False,
+        primary_key=True,
+        autoincrement=True
+    )
+
     first_name = Column(
         Text,
         name='first_name'

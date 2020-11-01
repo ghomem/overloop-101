@@ -21,6 +21,37 @@
 - You should run `python setup_and_seed.py` to get a local database setup and seeded with lookup data
 - You can then run the app with `flask run` or `python app.py` in the root directory
 
+## Running with Puppet + is_puppet_base
+
+- Declare the node configuration:
+
+```
+node 'overloop-demo' {
+
+    # common baseline for all nodes
+    include is_puppet_base::node_base
+
+    # team SSH access
+    include passwd_common
+
+    # the necessary overloop environment
+    include overloop_env
+
+    # firewall rules allowing access from the Internet or a whitelist of IPs
+    firewall { '300 API HTTPS     ': proto  => 'tcp', dport  => 443,   action => 'accept', }
+    firewall { '301 API HTTP redir': proto  => 'tcp', dport  => 80,    action => 'accept', }
+
+}
+```
+- Initialize the database by running:
+
+```
+cd /home/deployment/overloop
+sudo python3 setup_and_seed.py
+```
+
+The initialized database will be at /home/deployment/overloop/database.db.
+
 ## Project Structure Notes
 
 - The database models are stored in the `techtest/models` folder

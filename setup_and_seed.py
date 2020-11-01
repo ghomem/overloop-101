@@ -22,5 +22,9 @@ with db_session() as session:
             title='Post 2',
             content='This is the second post body',
             regions=[au, us]
-        )
+        ),
+        Author(
+            first_name='Gustavo',
+            last_name='Homem',
+        ),
     ])

@@ -59,3 +59,16 @@ The initialized database will be at /home/deployment/overloop/database.db.
 
 In both cases, the modules are loaded by using the `__all__` variable in `__init__.py`, so be sure to update this if you add new files.
 
+## Example invocations
+
+Internally:
+```
+curl http://localhost:8080/articles
+curl http://localhost:8080/regions
+```
+
+From the outside:
+```
+curl https://PUBLICURL/articles
+curl https://PUBLICURL/regions
+``` 

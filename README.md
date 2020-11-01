@@ -72,3 +72,4 @@ From the outside:
 curl https://PUBLICURL/articles
 curl https://PUBLICURL/regions
 ``` 
+These invocations should return JSON content.

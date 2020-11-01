@@ -6,7 +6,7 @@ After=basic.target network.target
 [Service]
 ExecStart=/usr/bin/gunicorn --bind 0.0.0.0:8080 wsgi --access-logfile /var/log/gunicorn-receiver-access.log --error-logfile /var/log/gunicorneceiver-error.log
 KillMode=process
-WorkingDirectory=/home/deployment/overloop/overloop-101
+WorkingDirectory=/home/deployment/overloop
 
 [Install]
 WantedBy=multi-user.target

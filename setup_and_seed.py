@@ -1,6 +1,6 @@
 from techtest.models.article import Article
 from techtest.models.region import Region
-from techtest.models.region import Author
+from techtest.models.author import Author
 from techtest.connector import engine, BaseModel, db_session
 
 BaseModel.metadata.create_all(engine)

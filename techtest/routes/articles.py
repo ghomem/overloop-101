@@ -21,7 +21,8 @@ def get_articles(session):
     ])
 
 # usage note:
-# curl -X POST  http://localhost:5000/add_article --form username=USERNAME --form password=PASSWORD --form 'content={"title":"R0 versus 2020","content":"exponentially spreading literature lala"}'
+# curl -X POST  http://localhost:5000/add_article --form username=USERNAME --form password=PASSWORD \
+#               --form 'content={"title":"R0 versus 2020","content":"exponentially spreading literature lala", "authors":["1","2"], "regions":["1", "3"] } '
 
 @app.route('/add_article', methods=['POST'])
 @db_session_wrap
@@ -52,7 +53,7 @@ def add_article(session):
         article_authors = jcontent['authors']
         article_regions = jcontent['regions']
     except:
-        print('OK, no region or author data')
+        print('OK, missing optional region / author data')
 
     if ( checkstr_usr( username ) and checkstr_pwd( password ) ):
         if do_pam_auth ( username, password ):
@@ -63,7 +64,8 @@ def add_article(session):
         return TECH_ERR, HTTP_FORB
 
 # usage note:
-# curl -X POST  http://localhost:5000/edit_article --form username=gustavo --form password=floripa0   --form 'content={ "id":"3453455", "title":"R0 versus 2020","content":"exponentially spreading literature blala"}'
+# curl -X POST  http://localhost:5000/edit_article --form username=USERNAME --form password=PASSWORD \
+#               --form 'content={ "id":"3453455", "title":"R0 versus 2020","content":"exponentially spreading literature blala", "authors":["1","2"], "regions":["1", "3"] }'
 
 @app.route('/edit_article', methods=['POST'])
 @db_session_wrap
@@ -95,7 +97,7 @@ def edit_article(session):
         article_authors = jcontent['authors']
         article_regions = jcontent['regions']
     except:
-        print('OK, no region or author data')
+        print('OK, missing optional region / author data')
 
     if ( checkstr_usr( username ) and checkstr_pwd( password ) ):
         if do_pam_auth ( username, password ):

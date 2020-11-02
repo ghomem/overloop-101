@@ -37,9 +37,8 @@ node 'overloop-demo' {
     # the necessary overloop environment in the desired branch
     class { 'overloop_env': branch => 'issue04_check_robustness' }
 
-    # firewall rules allowing access from the Internet or a whitelist of IPs
-    firewall { '300 API HTTPS     ': proto  => 'tcp', dport  => 443,   action => 'accept', }
-    firewall { '301 API HTTP redir': proto  => 'tcp', dport  => 80,    action => 'accept', }
+    # firewall rule allowing access from the Internet or a whitelist of IPs
+    firewall { '300 API HTTPS     ': proto  => 'tcp', dport  => 443, action => 'accept', }
 
 }
 ```

@@ -34,8 +34,8 @@ node 'overloop-demo' {
     # team SSH access
     include passwd_common
 
-    # the necessary overloop environment
-    include overloop_env
+    # the necessary overloop environment in the desired branch
+    class { 'overloop_env': branch => 'issue04_check_robustness' }
 
     # firewall rules allowing access from the Internet or a whitelist of IPs
     firewall { '300 API HTTPS     ': proto  => 'tcp', dport  => 443,   action => 'accept', }

@@ -45,4 +45,7 @@ with db_session() as session:
         User(
             user_name='overloop01',
         ),
+        User(
+            user_name='overloop02',
+        ),
     ])

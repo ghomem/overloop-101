@@ -1,7 +1,7 @@
 from techtest.models.article import Article
 from techtest.models.region import Region
 from techtest.models.author import Author
-from techtest.models.author import User
+from techtest.models.user import User
 from techtest.connector import engine, BaseModel, db_session
 
 BaseModel.metadata.drop_all(engine)   # forces the reset of the database
@@ -43,6 +43,6 @@ with db_session() as session:
             last_name='Fire',
         ),
         User(
-            user_name='gustavo',
+            user_name='overloop01',
         ),
     ])

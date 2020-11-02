@@ -4,6 +4,8 @@ from techtest.models.article import Article
 from techtest.models.region import Region
 from techtest.models.author import Author
 
+from flask import abort, jsonify, request
+
 # limit strings to reasonables sizes
 MAXSTR=2000
 MINSTR=2
@@ -38,6 +40,7 @@ TECH_MSG_NX_AUTHOR            = 'No such author exists'
 TECH_MSG_ARTICLE_EXISTS       = 'That article already exists'
 TECH_MSG_ARTICLE_ADDED        = 'Article added'
 TECH_MSG_ARTICLE_UPDATED      = 'Article updated'
+TECH_MSG_ARTICLE_DELETED      = 'Article deleted'
 TECH_MSG_NX_ARTICLE           = 'No such article exists'
 TECH_MSG_AUTHORS_INCONSISTENT = 'One or more author ids do not exist'
 TECH_MSG_REGIONS_INCONSISTENT = 'One or more region ids do not exist'
@@ -107,6 +110,12 @@ def check_author_by_id(session, id):
     else:
         return True
 
+def get_author_by_id(session, id):
+
+    query = session.query ( Author ).filter ( Author.id == id )
+
+    return jsonify([author.asdict() for author in query.all()])
+
 def check_authors (session, id_list):
 
     for id in id_list:
@@ -174,6 +183,15 @@ def do_edit_article(session, id, title, content, authors = [], regions = []):
     
     return TECH_MSG_ARTICLE_UPDATED, HTTP_OK
 
+def do_delete_article(session, id):
+
+    if not check_article_by_id(session, id):
+        return TECH_MSG_NX_ARTICLE, HTTP_OK
+
+    session.query( Article ).filter( Article.id == id ).delete()
+
+    return TECH_MSG_ARTICLE_DELETED, HTTP_OK
+
 def check_article(session, title):
 
     query = session.query( Article ).filter( Article.title == title )
@@ -192,6 +210,12 @@ def check_article_by_id(session, id):
     else:
         return True
 
+def get_article_by_id(session, id):
+
+    query = session.query ( Article ).filter ( Article.id == id )
+
+    return jsonify([article.asdict() for article in query.all()])
+
 # Region related
 
 def check_region_by_id(session, id):
@@ -202,6 +226,12 @@ def check_region_by_id(session, id):
         return False
     else:
         return True
+
+def get_region_by_id(session, id):
+
+    query = session.query ( Region ).filter ( Region.id == id )
+
+    return jsonify([region.asdict() for region in query.all()])
 
 def check_regions (session, id_list):
 

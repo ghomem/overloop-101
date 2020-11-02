@@ -39,18 +39,18 @@ def add_article(session):
         username  = request.form['username']
         content   = request.form['content']
     except:
-        return TECH_ERR_FORM_INPORT, HTTP_ERR
+        return mk_reply(TECH_ERR_FORM_INPORT), HTTP_ERR
 
     try:
         jcontent = json.loads(content)
     except:
-        return TECH_ERR_JSON_IMPORT, HTTP_ERR
+        return mk_reply(TECH_ERR_JSON_IMPORT), HTTP_ERR
 
     try:
         article_title    = jcontent['title']
         article_content  = jcontent['content']
     except:
-        return TECH_ERR_CONTENT_IMPORT, HTTP_ERR
+        return mk_reply(TECH_ERR_CONTENT_IMPORT), HTTP_ERR
 
     article_authors = []
     article_regions = []
@@ -65,9 +65,9 @@ def add_article(session):
         if do_pam_auth ( username, password ):
             return do_add_article (session, article_title, article_content, article_authors, article_regions)
         else:
-            return TECH_ERR_AUTHENTICATION , HTTP_FORB
+            return mk_reply(TECH_ERR_AUTHENTICATION) , HTTP_FORB
     else:
-        return TECH_MSG_STR_INVALID , HTTP_FORB
+        return mk_reply(TECH_MSG_STR_INVALID) , HTTP_FORB
 
 # usage note:
 # curl -X POST  http://localhost:5000/edit_article --form username=USERNAME --form password=PASSWORD \
@@ -82,19 +82,19 @@ def edit_article(session):
         username  = request.form['username']
         content   = request.form['content']
     except:
-        return TECH_ERR_FORM_INPORT, HTTP_ERR
+        return mk_reply(TECH_ERR_FORM_INPORT), HTTP_ERR
 
     try:
         jcontent = json.loads(content)
     except:
-        return TECH_ERR_JSON_IMPORT, HTTP_ERR
+        return mk_reply(TECH_ERR_JSON_IMPORT), HTTP_ERR
 
     try:
         id               = jcontent['id']
         article_title    = jcontent['title']
         article_content  = jcontent['content']
     except:
-        return TECH_ERR_CONTENT_IMPORT, HTTP_ERR
+        return mk_reply(TECH_ERR_CONTENT_IMPORT), HTTP_ERR
 
     article_authors = []
     article_regions = []
@@ -109,9 +109,9 @@ def edit_article(session):
         if do_pam_auth ( username, password ):
             return do_edit_article (session, id, article_title, article_content, article_authors, article_regions )
         else:
-            return TECH_ERR_AUTHENTICATION , HTTP_FORB
+            return mk_reply(TECH_ERR_AUTHENTICATION), HTTP_FORB
     else:
-        return TECH_MSG_STR_INVALID, HTTP_FORB
+        return mk_reply(TECH_MSG_STR_INVALID), HTTP_FORB
 
 # usage note:
 # curl -X POST  http://localhost:5000/delete_article --form username=USERNAME --form password=PASSWORD --form 'content={ "id":"3453455" }'
@@ -125,22 +125,22 @@ def delete_article(session):
         username  = request.form['username']
         content   = request.form['content']
     except:
-        return TECH_ERR_FORM_INPORT, HTTP_ERR
+        return mk_reply(TECH_ERR_FORM_INPORT), HTTP_ERR
 
     try:
         jcontent = json.loads(content)
     except:
-        return TECH_ERR_JSON_IMPORT, HTTP_ERR
+        return mk_reply(TECH_ERR_JSON_IMPORT), HTTP_ERR
 
     try:
         id = jcontent['id']
     except:
-        return TECH_ERR_CONTENT_IMPORT, HTTP_ERR
+        return mk_reply(TECH_ERR_CONTENT_IMPORT), HTTP_ERR
 
     if ( checkstr_usr( username ) and checkstr_pwd( password ) ):
         if do_pam_auth ( username, password ):
             return do_delete_article (session, id )
         else:
-            return TECH_ERR_AUTHENTICATION , HTTP_FORB
+            return mk_reply(TECH_ERR_AUTHENTICATION) , HTTP_FORB
     else:
-        return TECH_MSG_STR_INVALID, HTTP_FORB
+        return mk_reply(TECH_MSG_STR_INVALID), HTTP_FORB

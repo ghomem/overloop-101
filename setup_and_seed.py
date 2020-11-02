@@ -3,6 +3,7 @@ from techtest.models.region import Region
 from techtest.models.author import Author
 from techtest.connector import engine, BaseModel, db_session
 
+BaseModel.metadata.drop_all(engine)   # forces the reset of the database
 BaseModel.metadata.create_all(engine)
 
 with db_session() as session:

@@ -29,9 +29,12 @@ HTTP_ERR = 500
 # and messages
 TECH_MSG_AUTHOR_EXISTS  = 'That author already exists'
 TECH_MSG_AUTHOR_ADDED   = 'Author added'
+TECH_MSG_AUTHOR_UPDATED = 'Author updated'
+TECH_MSG_NX_AUTHOR      = 'No such author exists'
 TECH_ERR_JSON_IMPORT    = 'Error importing JSON input'
 TECH_ERR_CONTENT_IMPORT = 'Error on JSON content'
 TECH_ERR_FORM_INPORT    = 'Error obtaining form input'
+TECH_ERR_AUTHENTICATION = 'Authentication error'
 
 # some helper functions
 

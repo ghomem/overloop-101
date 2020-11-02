@@ -12,6 +12,11 @@ with db_session() as session:
     uk = Region(code='UK', name='United Kingdom')
     us = Region(code='US', name='United States of America')
 
+    author_gh = Author( first_name='Gustavo',  last_name='Homem',  )
+    author_jc = Author( first_name='Justin',   last_name='Case',   )
+    author_av = Author( first_name='Annie',    last_name='Versary',)
+    author_hf = Author( first_name='Harrison', last_name='Fire',   )
+
     session.add_all([
         au,
         uk,
@@ -19,29 +24,19 @@ with db_session() as session:
         Article(
             title='Post 1',
             content='This is a post body',
-            regions=[au, uk]
+            regions=[au, uk],
+            authors=[author_gh, author_jc]
         ),
         Article(
             title='Post 2',
             content='This is the second post body',
-            regions=[au, us]
+            regions=[au, us],
+            authors=[author_av, author_hf]
         ),
-        Author(
-            first_name='Gustavo',
-            last_name='Homem',
-        ),
-        Author(
-            first_name='Justin',
-            last_name='Case',
-        ),
-        Author(
-            first_name='Annie',
-            last_name='Versary',
-        ),
-        Author(
-            first_name='Harrison',
-            last_name='Fire',
-        ),
+        author_gh,
+        author_jc,
+        author_av,
+        author_hf,
         User(
             user_name='overloop01',
         ),

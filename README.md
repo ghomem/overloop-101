@@ -74,7 +74,7 @@ curl -X POST  http://localhost:8080/add_article --form username=USERNAME --form 
               --form 'content={ "title":"R0 versus 2020","content":"exponentially spreading literature blala", "authors":["1","2"], "regions":["1", "3"] }'
 curl -X POST  http://localhost:8080/edit_article --form username=USERNAME --form password=PASSWORD \
               --form 'content={ "id":"3453455", "title":"R0 versus 2020","content":"exponentially spreading literature blala", "authors":["1","2"], "regions":["1", "3"] }'
-
+curl -X POST  http://localhost:8080/delete_article --form username=USERNAME --form password=PASSWORD --form 'content={ "id":"3453455"}'
 ```
 
 From the outside:

@@ -67,7 +67,7 @@ def add_article(session):
         else:
             return TECH_ERR_AUTHENTICATION , HTTP_FORB
     else:
-        #return TECH_MSG_STR_INVALID , HTTP_FORB
+        return TECH_MSG_STR_INVALID , HTTP_FORB
 
 # usage note:
 # curl -X POST  http://localhost:5000/edit_article --form username=USERNAME --form password=PASSWORD \

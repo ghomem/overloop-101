@@ -65,11 +65,17 @@ Internally:
 ```
 curl http://localhost:8080/articles
 curl http://localhost:8080/regions
+curl http://localhost:8080/authors
+curl -X POST  http://localhost:5000/add_author  --form username=USERNAME --form password=PASSWORD --form 'content={"first_name":"Al","last_name":"Packa"}'
+curl -X POST  http://localhost:8080/edit_author --form username=USERNAME --form password=PASSWORD --form 'content={ "id:9898989", "first_name":"Al","last_name":"Pacone"}' 
+
 ```
 
 From the outside:
 ```
 curl https://PUBLICURL/articles
 curl https://PUBLICURL/regions
+[...]
 ``` 
+
 These invocations should return JSON content.

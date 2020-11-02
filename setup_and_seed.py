@@ -28,4 +28,16 @@ with db_session() as session:
             first_name='Gustavo',
             last_name='Homem',
         ),
+        Author(
+            first_name='Justin',
+            last_name='Case',
+        ),
+        Author(
+            first_name='Annie',
+            last_name='Versary',
+        ),
+        Author(
+            first_name='Harrison',
+            last_name='Fire',
+        ),
     ])

@@ -7,7 +7,7 @@ from techtest.models.region import Region
 
 @app.route('/authors', methods=['GET'])
 @db_session_wrap
-def get_regions(session):
+def get_authors(session):
     query = session.query(
         Author
     ).order_by(

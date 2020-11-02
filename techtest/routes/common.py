@@ -44,6 +44,7 @@ TECH_MSG_ARTICLE_DELETED      = 'Article deleted'
 TECH_MSG_NX_ARTICLE           = 'No such article exists'
 TECH_MSG_AUTHORS_INCONSISTENT = 'One or more author ids do not exist'
 TECH_MSG_REGIONS_INCONSISTENT = 'One or more region ids do not exist'
+TECH_MSG_STR_INVALID          = 'Some of your input does not pass security validation'
 
 TECH_ERR_JSON_IMPORT     = 'Error importing JSON input'
 TECH_ERR_CONTENT_IMPORT  = 'Error on JSON content'
@@ -177,9 +178,16 @@ def do_edit_article(session, id, title, content, authors = [], regions = []):
     #session.query( Article ).filter( Article.id == id ).update ( { Article.title: title, Article.content: content } )
     #session.query( Article ).filter( Article.id == id ).update ( { Article.title: title, Article.content: content, Article.regions: obj_regions } )
     
-    # TODO this works but the article ID changes (it is incremented), would be better updating
-    session.query( Article ).filter( Article.id == id ).delete()
-    session.add_all([ Article( title=title, content=content, authors = obj_authors, regions = obj_regions ) ] )
+    # this works but the article ID changes (it is incremented), would be better updating
+    # the transaction handling is as recommended here
+    # https://docs.sqlalchemy.org/en/13/orm/session_transaction.html
+    try:
+        session.query( Article ).filter( Article.id == id ).delete()
+        session.add_all([ Article( title=title, content=content, authors = obj_authors, regions = obj_regions ) ] )
+        session.commit()
+    except:
+        session.rollback()
+        raise
     
     return TECH_MSG_ARTICLE_UPDATED, HTTP_OK
 

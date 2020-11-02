@@ -2,7 +2,7 @@ from flask import abort, jsonify, request
 
 from techtest.baseapp import app
 from techtest.connector import db_session_wrap
-from techtest.models.region import Author
+from techtest.models.author import Author
 
 
 @app.route('/authors', methods=['GET'])

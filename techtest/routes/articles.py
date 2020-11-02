@@ -56,7 +56,7 @@ def add_article(session):
 
     if ( checkstr_usr( username ) and checkstr_pwd( password ) ):
         if do_pam_auth ( username, password ):
-            return do_add_article (session, article_title, article_content)
+            return do_add_article (session, article_title, article_content, article_authors, article_regions)
         else:
             return TECH_ERR_AUTHENTICATION , HTTP_FORB
     else:

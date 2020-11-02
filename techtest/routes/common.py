@@ -129,8 +129,18 @@ def do_add_article(session, title, content, authors = [], regions = []):
         return TECH_MSG_REGIONS_INCONSISTENT, HTTP_ERR
 
     # if it passed all validations
-    # TODO add regions and authors
-    session.add_all([ Article( title=title, content=content, ) ] )
+    obj_regions = []
+    obj_authors = []
+    for reg_id in regions:
+       obj = session.query ( Region ).filter ( Region.id == reg_id ).all()[0]
+       obj_regions.append(obj)
+
+    for author_id in authors:
+       obj = session.query ( Author ).filter ( Author.id == author_id ).all()[0]
+       obj_authors.append(obj)
+
+
+    session.add_all([ Article( title=title, content=content, authors = obj_authors, regions = obj_regions ) ] )
     return TECH_MSG_ARTICLE_ADDED, HTTP_OK
 
 def do_edit_article(session, id, title, content, authors = [], regions = []):
@@ -145,14 +155,15 @@ def do_edit_article(session, id, title, content, authors = [], regions = []):
         return TECH_MSG_REGIONS_INCONSISTENT, HTTP_ERR
 
     # if it passed all validations
-    ## TODO add regions and authors
     obj_regions = [ ]
     for reg_id in regions:
-       obj = session.query ( Region ).filter ( Region.id == reg_id ).all()
+       obj = session.query ( Region ).filter ( Region.id == reg_id ).all()[0]
+       print (obj.name, obj.code)
        obj_regions.append(obj)
 
     # TODO it breaks if we try to update the regions
     session.query( Article ).filter( Article.id == id ).update ( { Article.title: title, Article.content: content } )
+    #session.query( Article ).filter( Article.id == id ).update ( { Article.title: title, Article.content: content, Article.regions: obj_regions } )
     return TECH_MSG_ARTICLE_UPDATED, HTTP_OK
 
 def check_article(session, title):

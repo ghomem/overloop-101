@@ -177,9 +177,16 @@ def do_edit_article(session, id, title, content, authors = [], regions = []):
     #session.query( Article ).filter( Article.id == id ).update ( { Article.title: title, Article.content: content } )
     #session.query( Article ).filter( Article.id == id ).update ( { Article.title: title, Article.content: content, Article.regions: obj_regions } )
     
-    # TODO this works but the article ID changes (it is incremented), would be better updating
-    session.query( Article ).filter( Article.id == id ).delete()
-    session.add_all([ Article( title=title, content=content, authors = obj_authors, regions = obj_regions ) ] )
+    # this works but the article ID changes (it is incremented), would be better updating
+    # the transaction handling is as recommended here
+    # https://docs.sqlalchemy.org/en/13/orm/session_transaction.html
+    try:
+        session.query( Article ).filter( Article.id == id ).delete()
+        session.add_all([ Article( title=title, content=content, authors = obj_authors, regions = obj_regions ) ] )
+        session.commit()
+    except:
+        session.rollback()
+        raise
     
     return TECH_MSG_ARTICLE_UPDATED, HTTP_OK
 

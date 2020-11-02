@@ -41,4 +41,7 @@ with db_session() as session:
             first_name='Harrison',
             last_name='Fire',
         ),
+        User(
+            user_name='gustavo',
+        ),
     ])

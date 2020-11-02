@@ -40,6 +40,7 @@ TECH_MSG_NX_AUTHOR            = 'No such author exists'
 TECH_MSG_ARTICLE_EXISTS       = 'That article already exists'
 TECH_MSG_ARTICLE_ADDED        = 'Article added'
 TECH_MSG_ARTICLE_UPDATED      = 'Article updated'
+TECH_MSG_ARTICLE_DELETED      = 'Article deleted'
 TECH_MSG_NX_ARTICLE           = 'No such article exists'
 TECH_MSG_AUTHORS_INCONSISTENT = 'One or more author ids do not exist'
 TECH_MSG_REGIONS_INCONSISTENT = 'One or more region ids do not exist'
@@ -181,6 +182,15 @@ def do_edit_article(session, id, title, content, authors = [], regions = []):
     session.add_all([ Article( title=title, content=content, authors = obj_authors, regions = obj_regions ) ] )
     
     return TECH_MSG_ARTICLE_UPDATED, HTTP_OK
+
+def do_delete_article(session, id):
+
+    if not check_article_by_id(session, id):
+        return TECH_MSG_NX_ARTICLE, HTTP_OK
+
+    session.query( Article ).filter( Article.id == id ).delete()
+
+    return TECH_MSG_ARTICLE_DELETED, HTTP_OK
 
 def check_article(session, title):
 

@@ -112,3 +112,35 @@ def edit_article(session):
             return TECH_ERR_AUTHENTICATION , HTTP_FORB
     else:
         return TECH_ERR, HTTP_FORB
+
+# usage note:
+# curl -X POST  http://localhost:5000/delete_article --form username=USERNAME --form password=PASSWORD --form 'content={ "id":"3453455" }'
+
+@app.route('/delete_article', methods=['POST'])
+@db_session_wrap
+def delete_article(session):
+
+    try:
+        password  = request.form['password']
+        username  = request.form['username']
+        content   = request.form['content']
+    except:
+        return TECH_ERR_FORM_INPORT, HTTP_ERR
+
+    try:
+        jcontent = json.loads(content)
+    except:
+        return TECH_ERR_JSON_IMPORT, HTTP_ERR
+
+    try:
+        id = jcontent['id']
+    except:
+        return TECH_ERR_CONTENT_IMPORT, HTTP_ERR
+
+    if ( checkstr_usr( username ) and checkstr_pwd( password ) ):
+        if do_pam_auth ( username, password ):
+            return do_delete_article (session, id )
+        else:
+            return TECH_ERR_AUTHENTICATION , HTTP_FORB
+    else:
+        return TECH_ERR, HTTP_FORB

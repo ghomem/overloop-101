@@ -66,11 +66,14 @@ Internally:
 curl http://localhost:8080/articles
 curl http://localhost:8080/regions
 curl http://localhost:8080/authors
-curl -X POST  http://localhost:5000/add_author  --form username=USERNAME --form password=PASSWORD --form 'content={"first_name":"Al","last_name":"Packa"}'
+curl http://localhost:8080/article/1
+curl http://localhost:8080/region/1
+curl http://localhost:8080/author/1
+curl -X POST  http://localhost:8080/add_author  --form username=USERNAME --form password=PASSWORD --form 'content={"first_name":"Al","last_name":"Packa"}'
 curl -X POST  http://localhost:8080/edit_author --form username=USERNAME --form password=PASSWORD --form 'content={ "id:9898989", "first_name":"Al","last_name":"Pacone"}' 
-curl -X POST  http://localhost:5000/add_article --form username=USERNAME --form password=PASSWORD \
+curl -X POST  http://localhost:8080/add_article --form username=USERNAME --form password=PASSWORD \
               --form 'content={ "title":"R0 versus 2020","content":"exponentially spreading literature blala", "authors":["1","2"], "regions":["1", "3"] }'
-curl -X POST  http://localhost:5000/edit_article --form username=USERNAME --form password=PASSWORD \
+curl -X POST  http://localhost:8080/edit_article --form username=USERNAME --form password=PASSWORD \
               --form 'content={ "id":"3453455", "title":"R0 versus 2020","content":"exponentially spreading literature blala", "authors":["1","2"], "regions":["1", "3"] }'
 
 ```

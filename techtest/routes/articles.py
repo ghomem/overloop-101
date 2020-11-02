@@ -20,6 +20,12 @@ def get_articles(session):
         article.asdict(follow=['regions', 'authors']) for article in query.all()
     ])
 
+@app.route('/article/<id>', methods=['GET'])
+@db_session_wrap
+def get_article(session,id):
+
+    return get_article_by_id(session,id)
+
 # usage note:
 # curl -X POST  http://localhost:5000/add_article --form username=USERNAME --form password=PASSWORD \
 #               --form 'content={"title":"R0 versus 2020","content":"exponentially spreading literature lala", "authors":["1","2"], "regions":["1", "3"] } '

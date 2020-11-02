@@ -19,13 +19,20 @@ def get_authors(session):
     )
     return jsonify([author.asdict() for author in query.all()])
 
+@app.route('/author/<id>', methods=['GET'])
+@db_session_wrap
+def get_author(session,id):
+
+    return get_author_by_id(session,id)
+
+
 # usage note:
 # curl -X POST  http://localhost:5000/add_author --form username=USERNAME --form password=PASSWORD --form 'content={"first_name":"Al","last_name":"Packa"}'
 
 @app.route('/add_author', methods=['POST'])
 @db_session_wrap
 def add_author(session):
-    
+
     try:
         password  = request.form['password']
         username  = request.form['username']

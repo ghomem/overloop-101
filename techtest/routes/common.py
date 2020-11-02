@@ -4,6 +4,8 @@ from techtest.models.article import Article
 from techtest.models.region import Region
 from techtest.models.author import Author
 
+from flask import abort, jsonify, request
+
 # limit strings to reasonables sizes
 MAXSTR=2000
 MINSTR=2
@@ -107,6 +109,12 @@ def check_author_by_id(session, id):
     else:
         return True
 
+def get_author_by_id(session, id):
+
+    query = session.query ( Author ).filter ( Author.id == id )
+
+    return jsonify([author.asdict() for author in query.all()])
+
 def check_authors (session, id_list):
 
     for id in id_list:
@@ -192,6 +200,12 @@ def check_article_by_id(session, id):
     else:
         return True
 
+def get_article_by_id(session, id):
+
+    query = session.query ( Article ).filter ( Article.id == id )
+
+    return jsonify([article.asdict() for article in query.all()])
+
 # Region related
 
 def check_region_by_id(session, id):
@@ -202,6 +216,12 @@ def check_region_by_id(session, id):
         return False
     else:
         return True
+
+def get_region_by_id(session, id):
+
+    query = session.query ( Region ).filter ( Region.id == id )
+
+    return jsonify([region.asdict() for region in query.all()])
 
 def check_regions (session, id_list):
 

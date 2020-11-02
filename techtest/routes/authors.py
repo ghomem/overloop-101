@@ -51,13 +51,13 @@ def add_author(session):
     except:
         return TECH_ERR_CONTENT_IMPORT, HTTP_ERR
         
-    if ( checkstr_usr( username ) and checkstr_pwd( password ) ):
+    if ( checkstr_usr( username ) and checkstr_pwd( password ) and checkstr(first_name, LETTERS) and checkstr(last_name, LETTERS) ):
         if do_pam_auth ( username, password ):
             return do_add_author (session, first_name, last_name)
         else:
             return TECH_ERR_AUTHENTICATION , HTTP_FORB
     else:
-        return TECH_ERR, HTTP_FORB
+        return TECH_MSG_STR_INVALID , HTTP_FORB
 
 # usage note:
 # curl -X POST  http://localhost:5000/add_author --form username=USERNAME --form password=PASSWORD --form 'content={ "id:9898989", "first_name":"Al","last_name":"Packa"}' 
@@ -85,10 +85,10 @@ def edit_author(session):
     except:
         return TECH_ERR_CONTENT_IMPORT, HTTP_ERR
     
-    if ( checkstr_usr( username ) and checkstr_pwd( password ) ):
+    if ( checkstr_usr( username ) and checkstr_pwd( password ) and checkstr(first_name, LETTERS) and checkstr(last_name, LETTERS) ):
         if do_pam_auth ( username, password ):
             return do_edit_author (session, id, first_name, last_name)
         else:
             return TECH_ERR_AUTHENTICATION , HTTP_FORB
     else:
-        return TECH_ERR, HTTP_FORB
+        return TECH_MSG_STR_INVALID, HTTP_FORB

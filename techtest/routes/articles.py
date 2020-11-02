@@ -67,7 +67,7 @@ def add_article(session):
         else:
             return TECH_ERR_AUTHENTICATION , HTTP_FORB
     else:
-        return TECH_ERR, HTTP_FORB
+        #return TECH_MSG_STR_INVALID , HTTP_FORB
 
 # usage note:
 # curl -X POST  http://localhost:5000/edit_article --form username=USERNAME --form password=PASSWORD \
@@ -111,7 +111,7 @@ def edit_article(session):
         else:
             return TECH_ERR_AUTHENTICATION , HTTP_FORB
     else:
-        return TECH_ERR, HTTP_FORB
+        return TECH_MSG_STR_INVALID, HTTP_FORB
 
 # usage note:
 # curl -X POST  http://localhost:5000/delete_article --form username=USERNAME --form password=PASSWORD --form 'content={ "id":"3453455" }'
@@ -143,4 +143,4 @@ def delete_article(session):
         else:
             return TECH_ERR_AUTHENTICATION , HTTP_FORB
     else:
-        return TECH_ERR, HTTP_FORB
+        return TECH_MSG_STR_INVALID, HTTP_FORB

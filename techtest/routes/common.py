@@ -44,6 +44,7 @@ TECH_MSG_ARTICLE_DELETED      = 'Article deleted'
 TECH_MSG_NX_ARTICLE           = 'No such article exists'
 TECH_MSG_AUTHORS_INCONSISTENT = 'One or more author ids do not exist'
 TECH_MSG_REGIONS_INCONSISTENT = 'One or more region ids do not exist'
+TECH_MSG_STR_INVALID          = 'Some of your input does not pass security validation'
 
 TECH_ERR_JSON_IMPORT     = 'Error importing JSON input'
 TECH_ERR_CONTENT_IMPORT  = 'Error on JSON content'

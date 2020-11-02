@@ -1,4 +1,5 @@
 import pam
+import json
 
 from techtest.models.article import Article
 from techtest.models.region import Region
@@ -51,7 +52,12 @@ TECH_ERR_CONTENT_IMPORT  = 'Error on JSON content'
 TECH_ERR_FORM_INPORT     = 'Error obtaining form input'
 TECH_ERR_AUTHENTICATION  = 'Authentication error'
 
+JSON_REPLY_LABEL         = 'reply'
+
 # some helper functions
+
+def mk_reply ( mystr ):
+    return json.dumps ( { JSON_REPLY_LABEL:mystr } )
 
 # checks wether the strings chars are acceptable - size range and no funny characters
 def checkstr ( mystr, whitelist ):
@@ -80,18 +86,18 @@ def do_pam_auth ( username, password):
 def do_add_author(session, first_name, last_name):
 
     if check_author(session, first_name, last_name):
-        return TECH_MSG_AUTHOR_EXISTS, HTTP_OK
+        return mk_reply(TECH_MSG_AUTHOR_EXISTS), HTTP_OK
     else:
         session.add_all([ Author( first_name=first_name, last_name=last_name, ) ] )
-        return TECH_MSG_AUTHOR_ADDED, HTTP_OK
+        return mk_reply(TECH_MSG_AUTHOR_ADDED), HTTP_OK
 
 def do_edit_author(session, id, first_name, last_name):
 
     if check_author_by_id(session, id):
         session.query( Author ).filter( Author.id == id ).update ( { Author.first_name: first_name, Author.last_name: last_name } )
-        return TECH_MSG_AUTHOR_UPDATED, HTTP_OK
+        return mk_reply(TECH_MSG_AUTHOR_UPDATED), HTTP_OK
     else:
-        return TECH_MSG_NX_AUTHOR, HTTP_OK
+        return mk_reply(TECH_MSG_NX_AUTHOR), HTTP_OK
 
 def check_author(session, first_name, last_name):
 
@@ -130,13 +136,13 @@ def check_authors (session, id_list):
 def do_add_article(session, title, content, authors = [], regions = []):
 
     if check_article(session, title):
-        return TECH_MSG_ARTICLE_EXISTS, HTTP_OK
+        return mk_reply(TECH_MSG_ARTICLE_EXISTS), HTTP_OK
 
     if not check_authors ( session, authors ):
-        return TECH_MSG_AUTHORS_INCONSISTENT, HTTP_ERR
+        return mk_reply(TECH_MSG_AUTHORS_INCONSISTENT), HTTP_ERR
 
     if not check_regions ( session, regions ):
-        return TECH_MSG_REGIONS_INCONSISTENT, HTTP_ERR
+        return mk_reply(TECH_MSG_REGIONS_INCONSISTENT), HTTP_ERR
 
     # if it passed all validations
     obj_regions = []
@@ -150,18 +156,18 @@ def do_add_article(session, title, content, authors = [], regions = []):
        obj_authors.append(obj)
 
     session.add_all([ Article( title=title, content=content, authors = obj_authors, regions = obj_regions ) ] )
-    return TECH_MSG_ARTICLE_ADDED, HTTP_OK
+    return mk_reply(TECH_MSG_ARTICLE_ADDED), HTTP_OK
 
 def do_edit_article(session, id, title, content, authors = [], regions = []):
 
     if not check_article_by_id(session, id):
-        return TECH_MSG_NX_ARTICLE, HTTP_OK
+        return mk_reply(TECH_MSG_NX_ARTICLE), HTTP_OK
 
     if not check_authors ( session, authors ):
-        return TECH_MSG_AUTHORS_INCONSISTENT, HTTP_ERR
+        return mk_reply(TECH_MSG_AUTHORS_INCONSISTENT), HTTP_ERR
 
     if not check_regions ( session, regions ):
-        return TECH_MSG_REGIONS_INCONSISTENT, HTTP_ERR
+        return mk_reply(TECH_MSG_REGIONS_INCONSISTENT), HTTP_ERR
 
     # if it passed all validations
     obj_regions = []
@@ -189,16 +195,16 @@ def do_edit_article(session, id, title, content, authors = [], regions = []):
         session.rollback()
         raise
     
-    return TECH_MSG_ARTICLE_UPDATED, HTTP_OK
+    return mk_reply(TECH_MSG_ARTICLE_UPDATED), HTTP_OK
 
 def do_delete_article(session, id):
 
     if not check_article_by_id(session, id):
-        return TECH_MSG_NX_ARTICLE, HTTP_OK
+        return mk_reply(TECH_MSG_NX_ARTICLE), HTTP_OK
 
     session.query( Article ).filter( Article.id == id ).delete()
 
-    return TECH_MSG_ARTICLE_DELETED, HTTP_OK
+    return mk_reply(TECH_MSG_ARTICLE_DELETED), HTTP_OK
 
 def check_article(session, title):
 

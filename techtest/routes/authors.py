@@ -38,26 +38,26 @@ def add_author(session):
         username  = request.form['username']
         content   = request.form['content']
     except:
-        return TECH_ERR_FORM_INPORT, HTTP_ERR
+        return mk_reply(TECH_ERR_FORM_INPORT), HTTP_ERR
     
     try:
         jcontent = json.loads(content)
     except:
-        return TECH_ERR_JSON_IMPORT, HTTP_ERR
+        return mk_reply(TECH_ERR_JSON_IMPORT), HTTP_ERR
     
     try:
         first_name = jcontent['first_name']
         last_name  = jcontent['last_name']
     except:
-        return TECH_ERR_CONTENT_IMPORT, HTTP_ERR
+        return mk_reply(TECH_ERR_CONTENT_IMPORT), HTTP_ERR
         
     if ( checkstr_usr( username ) and checkstr_pwd( password ) and checkstr(first_name, LETTERS) and checkstr(last_name, LETTERS) ):
         if do_pam_auth ( username, password ):
             return do_add_author (session, first_name, last_name)
         else:
-            return TECH_ERR_AUTHENTICATION , HTTP_FORB
+            return mk_reply(TECH_ERR_AUTHENTICATION), HTTP_FORB
     else:
-        return TECH_MSG_STR_INVALID , HTTP_FORB
+        return mk_reply(TECH_MSG_STR_INVALID), HTTP_FORB
 
 # usage note:
 # curl -X POST  http://localhost:5000/add_author --form username=USERNAME --form password=PASSWORD --form 'content={ "id:9898989", "first_name":"Al","last_name":"Packa"}' 
@@ -71,24 +71,24 @@ def edit_author(session):
         username  = request.form['username']
         content   = request.form['content']
     except:
-        return TECH_ERR_FORM_INPORT, HTTP_ERR
+        return mk_reply(TECH_ERR_FORM_INPORT), HTTP_ERR
     
     try:
         jcontent = json.loads(content)
     except:
-        return TECH_ERR_JSON_IMPORT, HTTP_ERR
+        return mk_reply(TECH_ERR_JSON_IMPORT), HTTP_ERR
     
     try:
         id         = jcontent['id']
         first_name = jcontent['first_name']
         last_name  = jcontent['last_name']
     except:
-        return TECH_ERR_CONTENT_IMPORT, HTTP_ERR
+        return mk_reply(TECH_ERR_CONTENT_IMPORT), HTTP_ERR
     
     if ( checkstr_usr( username ) and checkstr_pwd( password ) and checkstr(first_name, LETTERS) and checkstr(last_name, LETTERS) ):
         if do_pam_auth ( username, password ):
             return do_edit_author (session, id, first_name, last_name)
         else:
-            return TECH_ERR_AUTHENTICATION , HTTP_FORB
+            return mk_reply(TECH_ERR_AUTHENTICATION), HTTP_FORB
     else:
-        return TECH_MSG_STR_INVALID, HTTP_FORB
+        return mk_reply(TECH_MSG_STR_INVALID), HTTP_FORB
